@@ -23,26 +23,58 @@ public class Sort
 	
 	public static int[] MergeSort(int[] a)
 	{
-		MergeSortHelper(a, 0, a.length-1);
-		
-		return a;
-	}
-	
-	public static void MergeSortHelper(int[] a, int start, int end)
-	{
-		if (start >= end)
+		if (a.length <= 1)
 		{
-			return;
+			return a;
 		}
 		
-		MergeSortHelper(a, start, end/2);
-		MergeSortHelper(a, end/2 + 1, end);
-		MergeSortMerge(a, start, end);
+		int[] left = new int[a.length/2];
+		int[] right = new int[a.length/2 + (a.length%2)];
+		
+		for (int i = 0; i < a.length/2; i ++)
+		{
+			left[i] = a[i];
+		}
+		for (int i = a.length/2; i < a.length; i ++)
+		{
+			right[i-a.length/2] = a[i];
+		}
+		
+		int[] leftSorted = MergeSort(left);
+		int[] rightSorted = MergeSort(right);
+		return MSMerge(leftSorted, rightSorted);
 	}
 	
-	public static void MergeSortMerge(int[] a, int start, int end)
+	public static int[] MSMerge(int[] left, int[] right)
 	{
+		int[] result = new int[left.length + right.length];
 		
+		int leftIdx = 0;
+		int rightIdx = 0;
+		boolean leftEmpty = false;
+		boolean rightEmpty = false;
+		
+		for (int i = 0; i < result.length; i ++)
+		{
+			if (!leftEmpty && left[leftIdx] < right[rightIdx])
+			{
+				result[i] = left[leftIdx++];
+				if (leftIdx >= left.length)
+				{
+					leftEmpty = true;
+				}
+			}
+			else if (!rightEmpty)
+			{
+				result[i] = right[rightIdx++];
+				if (rightIdx >= right.length)
+				{
+					rightEmpty = true;
+				}
+			}
+		}
+		
+		return result;
 	}
 	
 	public static int[] QuickSort(int[] a)
