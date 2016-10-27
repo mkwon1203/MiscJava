@@ -24,8 +24,26 @@ public class AVLTree
 		
 	}
 	
-	public boolean find(int i)
+	public boolean find(int keyToFind)
 	{
+		Node curr = root;
+		
+		while (curr != null)
+		{
+			if (curr.key == keyToFind)
+			{
+				return true;
+			}
+			else if (curr.key < keyToFind)
+			{
+				curr = curr.right;
+			}
+			else // curr.key > keyToFind
+			{
+				curr = curr.left;
+			}
+		}
+		
 		return false;
 	}
 

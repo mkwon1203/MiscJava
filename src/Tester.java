@@ -9,6 +9,7 @@ public class Tester
 		printArray(Sort.InsertionSort(a1));
 		printArray(Sort.MergeSort(a1));
 		printArray(Sort.QuickSort(a1));
+		printArray(MinHeap.heapSort(a1));
 	}
 
 	public static void printArray(int[] arr)
