@@ -14,13 +14,13 @@ public class Graph
 		
 		arr[0].addNeighbor(arr[1]);
 		arr[0].addNeighbor(arr[2]);
+		
+		// implement Dijkstra, BFS and DFS
 	}
 	
 	public static String generateDot(Node root)
 	{
 		String toReturn = "";
-
-		
 		
 		return toReturn;
 	}

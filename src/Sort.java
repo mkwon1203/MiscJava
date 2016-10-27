@@ -79,7 +79,59 @@ public class Sort
 	
 	public static int[] QuickSort(int[] a)
 	{
+		return QuickSort_rec(a, 0, a.length-1);
+	}
+	
+	public static int[] QuickSort_rec(int[]a, int low, int high)
+	{
+		 if (low >= high)
+			 return a;
 		
+		// pick pivot
+		// rand * high-low+1 gets us value 0 ~ high-low cuz int cast drops decimal, then we shift up by the low
+		// now our index is between range low ~ high
+		int pivotIndex = (int)(Math.random() * (high-low+1)) + low;
+		int pivot = a[pivotIndex];
+		
+		// move pivot to end
+		int temp = a[high];
+		a[high] = a[pivotIndex];
+		a[pivotIndex] = temp;
+		
+		// partition
+		// pivot is at high index
+		int lessIndex = low;
+		for (int i = low; i < high; i ++)
+		{
+			if (a[i] < pivot)
+			{
+				// we need to move it to lessIndex!
+				temp = a[lessIndex];
+				a[lessIndex] = a[i];
+				a[i] = temp;
+				lessIndex ++;
+			}
+			// else we're good, keep going
+		}
+		// finally move pivot into place
+		temp = a[high];
+		a[high] = a[lessIndex];
+		a[lessIndex] = temp;
+		
+		// recurse on left/right side of the pivot
+		// note, lessIndex is where we finally stored our pivot
+		int[] aLeft = QuickSort_rec(a, low, lessIndex-1);
+		int[] aRight = QuickSort_rec(a, lessIndex+1, high);
+		
+		// this is inefficient... should've probably had one instance field array that methods access..
+		for (int i = low; i <= lessIndex-1; i ++)
+		{
+			a[i] = aLeft[i];
+		}
+		for (int i = lessIndex+1; i<= high; i ++)
+		{
+			a[i] = aRight[i];
+		}
 		
 		return a;
 	}
